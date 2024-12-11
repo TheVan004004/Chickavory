@@ -19,8 +19,7 @@ export default function NavLeft() {
       </div>
       <div
         className="size-12 rounded-full border-b-2
-        flex justify-center items-center cursor-pointer
-      "
+        flex justify-center items-center cursor-pointer"
       >
         Khác
       </div>

@@ -1,11 +1,11 @@
+import NavBottom from "./components/navbar/NavBottom";
+import NavRight from "./components/navbar/NavRight";
+import ModalUser from "./components/user/ModalUser";
 import Footer from "./layouts/Footer";
 import Header from "./layouts/Header";
-import NavBottom from "./components/NavBottom";
 import { Outlet } from "react-router";
-import NavLeft from "./components/NavLeft";
-import ModalUser from "./components/ModalUser";
-import NavRight from "./components/NavRight";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function App() {
   return (
     <>
@@ -16,6 +16,7 @@ export default function App() {
       <ModalUser />
       {/* <NavLeft /> */}
       <NavRight />
+      <ToastContainer />
     </>
   );
 }

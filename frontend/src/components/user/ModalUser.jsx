@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { HiOutlineUserCircle } from "react-icons/hi";
-import useMainContext from "../hooks/useMainContext";
+import useMainContext from "../../hooks/useMainContext";
 import { HiOutlineXCircle } from "react-icons/hi";
 import { HiOutlineKey } from "react-icons/hi";
 import { HiOutlineCheckCircle } from "react-icons/hi";
+import { isRequired, minChar, validate } from "../../validation";
+import { loginAPI } from "../../services/user.api";
+import { useNavigate } from "react-router-dom";
 export default function ModalUser() {
   const {
     isOpenModalUser,
@@ -14,10 +17,31 @@ export default function ModalUser() {
   } = useMainContext();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = () => {
-    const data = { username: username, password: password };
-    setUser(data);
-    reset();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const handleLogin = async () => {
+    const nameError = validate(username, [isRequired]);
+    const passwordError = validate(password, [isRequired]);
+    if (nameError === passwordError) {
+      setError(nameError);
+    } else {
+      setError(nameError + passwordError);
+    }
+    if (!error) {
+      try {
+        const res = await loginAPI({ username, password });
+        console.log(res.data);
+        setUser(res.data.user);
+        if (res.data.user?.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
+        reset();
+      } catch (e) {
+        console.log(e);
+      }
+    }
   };
   const handlRegister = () => {
     console.log("register");
@@ -26,6 +50,7 @@ export default function ModalUser() {
     setIsOpenModalUser(false);
     setUsername("");
     setPassword("");
+    setError("");
   };
   return (
     <>
@@ -61,6 +86,8 @@ export default function ModalUser() {
                 ></input>
               </div>
             )}
+            {error && <div className="text-red-500">Note: {error}</div>}
+
             <div className=" self-end text-sm">
               {stateModalUser === "login"
                 ? "Nếu bạn mới biết đến Chickavory? "
@@ -73,14 +100,14 @@ export default function ModalUser() {
                   );
                 }}
               >
-                {stateModalUser === "login" ? "Đăng ký ngay" : "Đăng nhập"}
+                {stateModalUser === "login" ? "Sign up now" : "Login"}
               </div>
             </div>
             <button
               className="p-2 rounded-xl bg-yellow-500 font-semibold text-xl"
               onClick={stateModalUser === "login" ? handleLogin : handlRegister}
             >
-              {stateModalUser === "login" ? "Đăng nhập" : "Đăng ký"}
+              {stateModalUser === "login" ? "Login" : "Sign up"}
             </button>
             <HiOutlineXCircle
               className="absolute top-2 right-2 size-8 text-yellow-500"

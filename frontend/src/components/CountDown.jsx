@@ -5,7 +5,7 @@ export default function CountDownTime() {
   const [minuteTime, setMinuteTime] = useState("00");
   const [secondTime, setSecondTime] = useState("00");
   useEffect(() => {
-    const countDownDate = new Date("December 01, 2024 00:00:00").getTime();
+    const countDownDate = new Date("December 20, 2024 00:00:00").getTime();
     const interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countDownDate - now;

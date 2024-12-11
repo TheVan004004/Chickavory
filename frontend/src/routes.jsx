@@ -5,6 +5,10 @@ import Home from "./pages/Home";
 import News from "./pages/News";
 import User from "./pages/User";
 import Cart from "./pages/Cart";
+import Admin from "./pages/Admin";
+import ManageProducts from "./components/admin/ManageProducts";
+import ManageOrders from "./components/admin/ManageOrders";
+import Delivery from "./pages/Delivery";
 
 export default function RoutesApp() {
   return useRoutes([
@@ -25,8 +29,26 @@ export default function RoutesApp() {
           element: <User />,
         },
         {
+          path: "delivery",
+          element: <Delivery />,
+        },
+        {
           path: "cart",
           element: <Cart />,
+        },
+        {
+          path: "admin",
+          element: <Admin />,
+          children: [
+            {
+              index: true,
+              element: <ManageProducts />,
+            },
+            {
+              path: "orders",
+              element: <ManageOrders />,
+            },
+          ],
         },
       ],
     },

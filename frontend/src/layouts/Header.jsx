@@ -24,7 +24,7 @@ export default function Header() {
           <HiOutlineFire className="h-8 w-8 hover:text-yellow-400 hover:scale-110 cursor-pointer transition-all duration-500" />
         </Link>
         {user ? (
-          <Link to="user">
+          <Link to={user?.role === "admin" ? "admin" : "user"}>
             <HiOutlineUserCircle className="h-8 w-8 hover:scale-110 cursor-pointer transition-all duration-500" />
           </Link>
         ) : (

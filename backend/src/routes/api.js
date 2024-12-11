@@ -1,12 +1,44 @@
 import express from "express";
-import { login, signup } from "../controller/user.controller.js";
+import { login, signup, update } from "../controller/user.controller.js";
+import {
+  deleteProduct,
+  getAllCategories,
+  getProducts,
+  getTopDiscountProducts,
+  updateProduct,
+} from "../controller/product.controller.js";
+import {
+  addToCart,
+  deleteProductInCart,
+  getProductsInCart,
+  updateProductInCart,
+} from "../controller/cart.controller.js";
+import { order } from "../controller/order.controller.js";
 
 const router = express.Router();
 // init route
 const initAPIRoute = (app) => {
   //user
   app.post("/api/user/signup", signup);
-  app.get("/api/user/login", login);
+  app.post("/api/user/login", login);
+  app.put("/api/user/update", update);
+
+  //product
+  app.get("/api/product", getProducts);
+  app.get("/api/product/category", getAllCategories);
+  app.get("/api/product/most_discount", getTopDiscountProducts);
+  app.put("/api/product/update", updateProduct);
+  app.delete("/api/product/delete", deleteProduct);
+
+  //cart
+  app.post("/api/user/cart", addToCart);
+  app.get("/api/user/cart/product", getProductsInCart);
+  app.delete("/api/user/cart/product/delete", deleteProductInCart);
+  app.put("/api/user/cart/product/update", updateProductInCart);
+
+  //order
+  app.post("/api/user/order", order);
+
   app.use("/api/v1", router);
 };
 

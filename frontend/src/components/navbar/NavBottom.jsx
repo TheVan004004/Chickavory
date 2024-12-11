@@ -4,7 +4,7 @@ import { HiOutlineFire } from "react-icons/hi";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { HiOutlineMenu } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import useMainContext from "../hooks/useMainContext";
+import useMainContext from "../../hooks/useMainContext";
 export default function NavBottom() {
   const { setIsOpenNavRight, setIsOpenModalUser, user } = useMainContext();
   return (
@@ -23,7 +23,7 @@ export default function NavBottom() {
           <HiOutlineFire className="h-8 w-8 hover:text-yellow-400 hover:scale-110 cursor-pointer transition-all duration-500" />
         </Link>
         {user ? (
-          <Link to="user">
+          <Link to={user?.role === "admin" ? "admin" : "user"}>
             <HiOutlineUserCircle className="h-8 w-8 hover:scale-110 cursor-pointer transition-all duration-500" />
           </Link>
         ) : (

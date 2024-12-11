@@ -1,20 +1,26 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import useMainContext from "../hooks/useMainContext";
+import useMainContext from "../../hooks/useMainContext";
 export default function NavRight() {
-  const { setIsOpenNavRight, isOpenNavRight, setUser } = useMainContext();
+  const { setIsOpenNavRight, isOpenNavRight, setUser, user } = useMainContext();
   const navigate = useNavigate();
   const body = () => (
     <>
-      <button
-        className="py-2 hover:bg-black/20 hover:text-white hover:font-semibold"
-        onClick={() => navigate("/cart")}
-      >
-        Giỏ hàng
-      </button>
+      {user?.role !== "admin" && (
+        <button
+          className="py-2 hover:bg-black/20 hover:text-white hover:font-semibold"
+          onClick={() => {
+            navigate("/cart");
+            setIsOpenNavRight(false);
+          }}
+        >
+          Giỏ hàng
+        </button>
+      )}
       <button
         className="py-2 hover:bg-black/20 hover:text-white hover:font-semibold"
         onClick={() => {
+          navigate("/");
           setUser("");
           setIsOpenNavRight(false);
         }}
