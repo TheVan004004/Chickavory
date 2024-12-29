@@ -1,23 +1,27 @@
 import axios from "axios";
+import { urlAPI } from "./url";
 
-const loginAPI = (input) => {
-  const { username, password } = input;
+export const loginAPI = ({ username, password }) => {
   const data = {
     username: username,
     password: password,
   };
-  console.log(data);
-  return axios.post("http://localhost:8080/api/user/login", data);
+  return axios.post(urlAPI.login, data);
 };
-const updateAPI = (input) => {
-  const { user_id, address, phonenumber, fullname } = input;
+export const updateAPI = ({ user_id, address, phonenumber, fullname }) => {
   const data = {
     user_id: user_id,
     address: address,
     phonenumber: phonenumber,
     fullname: fullname,
   };
-  console.log(data);
-  return axios.put("http://localhost:8080/api/user/update", data);
+  return axios.put(urlAPI.updateUser, data);
 };
-export { loginAPI, updateAPI };
+
+export const signupAPI = ({ username, password }) => {
+  const data = {
+    username: username,
+    password: password,
+  };
+  return axios.put(apiURL.signup, data);
+};

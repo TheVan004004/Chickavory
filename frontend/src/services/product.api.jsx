@@ -1,14 +1,14 @@
 import axios from "axios";
+import { urlAPI } from "./url";
 
-const getCategoriesAPI = () => {
-  return axios.get("http://localhost:8080/api/product/category");
+export const getCategoriesAPI = () => {
+  return axios.get(urlAPI.getCategories);
 };
 
-const getTopDiscountAPI = () => {
+export const getTopDiscountAPI = () => {
   return axios.get("http://localhost:8080/api/product/most_discount");
 };
-const getProductsAPI = (input) => {
-  const { category_id, sort_by, desc } = input;
+export const getProductsAPI = ({ category_id, sort_by, desc }) => {
   const data = {
     params: {
       category_id: category_id !== "ALL" ? category_id || "" : "",
@@ -16,33 +16,25 @@ const getProductsAPI = (input) => {
       desc: desc || "",
     },
   };
-  return axios.get("http://localhost:8080/api/product", data);
+  return axios.get(urlAPI.getProducts, data);
 };
 
-const updateProductAPI = (input) => {
-  const { product_id, price, name, discount } = input;
+export const updateProductAPI = ({ product_id, price, name, discount }) => {
   const data = {
     product_id: product_id,
     price: price,
     name: name,
     discount: discount,
   };
-  console.log(data);
-  return axios.put("http://localhost:8080/api/product/update", data);
+
+  return axios.put(urlAPI.updateProduct, data);
 };
 
-const deleteProductAPI = (product_id) => {
+export const deleteProductAPI = (product_id) => {
   const data = {
     params: {
       product_id: product_id,
     },
   };
-  return axios.delete("http://localhost:8080/api/product/delete", data);
-};
-export {
-  getCategoriesAPI,
-  getProductsAPI,
-  getTopDiscountAPI,
-  updateProductAPI,
-  deleteProductAPI,
+  return axios.delete(urlAPI.deleteProduct, data);
 };

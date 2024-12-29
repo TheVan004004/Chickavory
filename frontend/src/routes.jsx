@@ -37,7 +37,7 @@ export default function RoutesApp() {
           element: <Cart />,
         },
         {
-          path: "admin",
+          path: "admin/",
           element: <Admin />,
           children: [
             {

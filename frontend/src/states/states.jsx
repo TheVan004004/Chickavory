@@ -4,8 +4,6 @@ import { getProductsAPI } from "../services/product.api";
 export const MainContext = createContext({});
 
 export const ContextWrapper = (props) => {
-  const [isOpenNavRight, setIsOpenNavRight] = useState(false);
-  const [isOpenModalUser, setIsOpenModalUser] = useState(false);
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user") || "") || ""
   );
@@ -15,6 +13,8 @@ export const ContextWrapper = (props) => {
     name: "ALL",
     image: null,
   });
+  const [isOpenNavRight, setIsOpenNavRight] = useState(false);
+  const [isOpenModalUser, setIsOpenModalUser] = useState(false);
   const [sort_by, setSort_by] = useState("");
   const [desc, setDesc] = useState("");
   const [listProducts, setListProducts] = useState([]);

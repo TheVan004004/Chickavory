@@ -1,13 +1,20 @@
 import axios from "axios";
+import { urlAPI } from "./url";
 
-const orderAPI = (input) => {
-  const { user_id, listOrder } = input;
+export const orderAPI = ({ user_id, listOrder }) => {
   const data = {
     user_id: user_id,
     listOrder: listOrder,
   };
-  console.log(data);
-  return axios.post("http://localhost:8080/api/user/order", data);
+  return axios.post(urlAPI.order, data);
 };
 
-export { orderAPI };
+export const getOrdersAPI = async ({ user_id, status }) => {
+  const data = {
+    params: {
+      user_id: user_id,
+      status: status,
+    },
+  };
+  return axios.get(urlAPI.getOrder, data);
+};

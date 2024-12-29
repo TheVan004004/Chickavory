@@ -1,10 +1,9 @@
 import React from "react";
-import chicken from "../../assets/chicken.png";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 export default function ProductPurchased() {
   return (
     <div className="w-full h-[104px] flex gap-2 max-md:gap-4 justify-between items-center border-red-700 border-[1px] p-2 rounded-xl">
-      <img className="h-full rounded-xl" src={chicken} alt="" />
+      <img className="h-full rounded-xl" src={"chicken"} alt="" />
       <div className="flex-grow flex flex-col justify-between">
         <div className=" font-medium text-ellipsis text-nowrap">
           Tên sản phẩm

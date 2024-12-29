@@ -1,4 +1,9 @@
 import { db } from "../config/database.js";
+import env from "dotenv";
+
+env.config();
+const port = process.env.PORT;
+const hostname = process.env.HOST_NAME;
 async function order(req, res) {
   try {
     const { user_id, listOrder } = req.body;
@@ -39,7 +44,6 @@ async function order(req, res) {
       );
     }
 
-    // Phản hồi thành công
     res.status(200).json({
       messages: "Order created successfully",
       order_id,
@@ -52,4 +56,38 @@ async function order(req, res) {
   }
 }
 
-export { order };
+async function getOrder(req, res) {
+  try {
+    const { user_id, status } = req.query;
+    let queryContent = `
+    select o.id, od.count, pds.id, pds.image, pds.name, pds.price,
+    o.created_at, ct.name as category_name, sales.discount
+    from orders o
+    join order_detail od on od.order_id = o.id
+    join products pds on pds.id = od.product_id
+    left join sales on pds.sale_id = sales.id
+    left join categories ct on ct.id = pds.category_id
+    where user_id = $1
+    `;
+    let value = [user_id];
+    if (status) {
+      queryContent += " and status = $2";
+      value = [user_id, status];
+    }
+    const { rows } = await db.query(queryContent, value);
+    const products = rows?.map((row) => {
+      return {
+        ...row,
+        image: `http://${hostname}:${port}/images/products/${row.image}`,
+      };
+    });
+    res.status(200).json(products);
+  } catch (e) {
+    console.error(e);
+    res.status(400).json({
+      messages: e.message,
+    });
+  }
+}
+
+export { order, getOrder };

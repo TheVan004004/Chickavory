@@ -1,5 +1,4 @@
 import React from "react";
-import chicken from "../../assets/chicken.png";
 import { HiOutlineTag, HiOutlinePlusSm } from "react-icons/hi";
 import CountDownTime from "../CountDown";
 export default function ProductDiscountTime({ product }) {

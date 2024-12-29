@@ -1,4 +1,4 @@
-const validate = (value, validation, check) => {
+export const validate = (value, validation, check) => {
   let errorMessage = [];
   validation.forEach((func) => {
     if (func === isConfirmed) {
@@ -24,14 +24,32 @@ const validate = (value, validation, check) => {
   else return "";
 };
 
-const isRequired = (value) => {
+export const validateForm = (form) => {
+  let error = new Set();
+  form.forEach((feild) => {
+    if (isRequired(feild.value)) {
+      error.add(isRequired(feild.value));
+    }
+    feild.validates.forEach((validate) => {
+      if (validate.function(feild.value, validate.check)) {
+        error.add(validate.function(feild.value, validate.check));
+      }
+    });
+  });
+  return error;
+};
+export const isRequired = (value) => {
   if (value.trim() === "") return "Please fill all informations. ";
 };
-const isConfirmed = (value, valueConfirm) => {
+export const isConfirmed = (value, valueConfirm) => {
   if (value !== valueConfirm) return "Confirm password is incorrect. ";
 };
 
-const minChar = (value, min) => {
+export const minChar = (value, min) => {
   if (value.length < min) return `At lease ${min} characters. `;
 };
-export { validate, isRequired, isConfirmed, minChar };
+
+export const minCharPassword = (value, min) => {
+  if (value.length < min)
+    return `Password must be at least ${min} characters. `;
+};
