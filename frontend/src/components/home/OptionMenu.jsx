@@ -4,22 +4,14 @@ import { getCategoriesAPI } from "../../services/product.api";
 import useMainContext from "../../hooks/useMainContext";
 import OptionSort from "./components/OptionSort";
 import OptionSortForSmallView from "./components/OptionSortForSmallView";
-
-export default function OptionMenu() {
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    getCategories();
-  }, []);
-  const getCategories = async () => {
-    const res = await getCategoriesAPI();
-    setCategories([{ id: "ALL", name: "ALL", image: null }, ...res.data]);
-  };
-  const options = [
-    { name: "Best Seller", sort_by: "buyturn" },
-    { name: "Super Discount", sort_by: "sale" },
-    { name: "Hottest Combo", sort_by: "buyturn" },
-    { name: "Top Rate", sort_by: "buyturn" },
-  ];
+const options = [
+  { name: "Best Seller", sort_by: "buyturn" },
+  { name: "Super Discount", sort_by: "sale" },
+  { name: "Hottest Combo", sort_by: "buyturn" },
+  { name: "Top Rate", sort_by: "buyturn" },
+];
+export default function OptionMenu({ categorySelected, setCategorySelected }) {
+  const { categories } = useMainContext();
   return (
     <>
       <div className="max-md:hidden flex justify-between gap-0 items-center h-24 rounded-xl bg-red-200 shadow-md shadow-red-400/50">
@@ -51,7 +43,14 @@ export default function OptionMenu() {
       <div className="w-full">
         <div className="flex flex-nowrap gap-4">
           {categories.map((category, index) => {
-            return <CardSelect category={category} key={category.id} />;
+            return (
+              <CardSelect
+                category={category}
+                key={category.id}
+                categorySelected={categorySelected}
+                setCategorySelected={setCategorySelected}
+              />
+            );
           })}
         </div>
       </div>

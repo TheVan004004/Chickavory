@@ -5,16 +5,15 @@ import { HiOutlineXCircle } from "react-icons/hi";
 import { HiOutlineKey } from "react-icons/hi";
 import { HiOutlineCheckCircle } from "react-icons/hi";
 import {
-  isRequired,
+  isConfirmedPassword,
   minChar,
   minCharPassword,
   validate,
   validateForm,
 } from "../../validation";
-import { loginAPI } from "../../services/user.api";
+import { loginAPI, signupAPI } from "../../services/user.api";
 import { useNavigate } from "react-router-dom";
 import Modal from "../modal/Modal";
-import ButtonCustom from "../button/ButtonCustom";
 export default function ModalUser() {
   const {
     isOpenModalUser,
@@ -53,6 +52,7 @@ export default function ModalUser() {
         } else {
           navigate("/");
         }
+        setIsOpenModalUser(false);
         reset();
       } catch (e) {
         console.log(e);
@@ -64,7 +64,11 @@ export default function ModalUser() {
   const handlRegister = async () => {
     const form = [
       { value: username, validates: [] },
-      { value: username, validates: [{ function: minCharPassword, check: 8 }] },
+      { value: password, validates: [{ function: minCharPassword, check: 5 }] },
+      {
+        value: confirmPassword,
+        validates: [{ function: isConfirmedPassword, check: password }],
+      },
     ];
     const listError = validateForm(form);
     setError((prev) => {
@@ -76,13 +80,9 @@ export default function ModalUser() {
     });
     if (listError.size === 0) {
       try {
-        const res = await loginAPI({ username, password });
+        const res = await signupAPI({ username, password });
         setUser(res.data.user);
-        if (res.data.user?.role === "admin") {
-          navigate("/admin");
-        } else {
-          navigate("/");
-        }
+        setIsOpenModalUser(false);
         reset();
       } catch (e) {
         console.log(e);
@@ -94,6 +94,7 @@ export default function ModalUser() {
     setUsername("");
     setPassword("");
     setError("");
+    setConfirmPassword("");
   };
   return (
     <Modal isOpenModal={isOpenModalUser} setIsOpenModal={setIsOpenModalUser}>
@@ -125,6 +126,8 @@ export default function ModalUser() {
             <input
               className="flex-grow py-2 px-4 rounded-xl outline-none border-yellow-500 border-2"
               placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             ></input>
           </div>
         )}

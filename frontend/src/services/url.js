@@ -21,4 +21,5 @@ export const urlAPI = {
   getProducts: `${url}/product`,
   updateProduct: `${url}/product/update`,
   deleteProduct: `${url}/product/delete`,
+  addProduct: `${url}/product/add`,
 };

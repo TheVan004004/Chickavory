@@ -42,9 +42,9 @@ export default function ProductAdmin({
         (product?.status === "delete" ? "bg-red-300" : "")
       }
     >
-      <td className="px-6 py-4 font-bold">
+      <td className="px-6 py-4 font-bold truncate">
         <input
-          className="outline-none bg-inherit"
+          className="outline-none bg-inherit "
           value={product.name}
           onChange={(e) => {
             console.log("event", e.target.value);
@@ -57,11 +57,7 @@ export default function ProductAdmin({
         ></input>
       </td>
       <td className="px-6 py-4">{product.category_name}</td>
-      <td className="px-6 py-4 flex items-center justify-between">
-        <div> anh san pham.png</div>
-        <HiOutlineUpload className="size-6 text-gray-400 hover:text-black" />
-      </td>
-      <td className="px-6 py-4">{product.buyturn}</td>
+      <td className="px-6 py-4 text-center">{product.buyturn}</td>
       <td className="px-6 py-4">
         {" "}
         <input
@@ -76,9 +72,9 @@ export default function ProductAdmin({
           disabled={!isEdit}
         ></input>
       </td>
-      <td className="px-6 py-4">
+      <td className="px-6 py-4 flex justify-center">
         <select
-          className="outline-none bg-inherit"
+          className="outline-none bg-inherit "
           value={product.discount}
           onChange={(e) =>
             onChangeDataInCache({
@@ -88,6 +84,7 @@ export default function ProductAdmin({
           }
           disabled={!isEdit}
         >
+          <option value="0">None</option>
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="30">30</option>
@@ -98,6 +95,12 @@ export default function ProductAdmin({
           <option value="80">80</option>
           <option value="90">90</option>
         </select>
+      </td>
+      <td className="px-6 py-4 text-center font-bold text-red-900">
+        {((product.price * (100 - product.discount)) / 100).toLocaleString(
+          "vi-VN"
+        )}{" "}
+        VND
       </td>
       <td className="px-6 py-4 ">
         <HiOutlineTrash

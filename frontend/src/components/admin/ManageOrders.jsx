@@ -41,9 +41,7 @@ export default function ManageOrders() {
             </thead>
             <tbody className="bg-red-400">
               {listOrders?.map((order, index) => {
-                return (
-                  <CardOrder index={index} order={order} key={product.id} />
-                );
+                return <></>;
               })}
             </tbody>
           </table>

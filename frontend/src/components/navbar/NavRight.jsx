@@ -6,15 +6,35 @@ export default function NavRight() {
   const navigate = useNavigate();
   const body = () => (
     <>
-      {user?.role !== "admin" && (
+      {user?.role !== "admin" ? (
+        <>
+          <button
+            className="py-2 hover:bg-black/20 hover:text-white hover:font-semibold"
+            onClick={() => {
+              navigate("/user");
+              setIsOpenNavRight(false);
+            }}
+          >
+            My account
+          </button>
+          <button
+            className="py-2 hover:bg-black/20 hover:text-white hover:font-semibold"
+            onClick={() => {
+              navigate("/order");
+            }}
+          >
+            My Order
+          </button>
+        </>
+      ) : (
         <button
           className="py-2 hover:bg-black/20 hover:text-white hover:font-semibold"
           onClick={() => {
-            navigate("/cart");
+            navigate("/admin");
             setIsOpenNavRight(false);
           }}
         >
-          Giỏ hàng
+          Manage
         </button>
       )}
       <button
@@ -25,7 +45,7 @@ export default function NavRight() {
           setIsOpenNavRight(false);
         }}
       >
-        Đăng xuất
+        Log out
       </button>
     </>
   );

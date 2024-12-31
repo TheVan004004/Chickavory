@@ -11,11 +11,20 @@ async function addToCart(req, res) {
     if (!user_id && !product_id && !count) {
       throw { messages: "Error" };
     }
+    const product = await db.query(
+      "select * from products where product_id = $1",
+      [product_id]
+    );
+    if (
+      product.rows[0].active === false ||
+      product.rows[0].active === "false"
+    ) {
+      throw { messages: "This product is no longer for sale" };
+    }
     const { rows } = await db.query(
       "select * from carts where user_id = $1 and product_id = $2",
       [user_id, product_id]
     );
-
     if (rows.length == 0) {
       await db.query(
         "insert into carts (user_id,product_id,count,created_at) values ($1,$2,$3,Now())",

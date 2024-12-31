@@ -9,9 +9,9 @@ export default function Admin() {
   return (
     <>
       {user?.role === "admin" ? (
-        <div className="p-4 pt-24 min-h-[calc(100vh-5rem)] max-md:min-h-[calc(100vh-8rem)] flex flex-col gap-4">
+        <div className="p-12 pt-24 min-h-[calc(100vh-5rem)] max-md:min-h-[calc(100vh-8rem)] max-md:p-4 flex flex-col gap-4">
           <NavbarForAdmin />
-          <div className="w-[17rem] h-[2px] bg-red-600"></div>
+          <div className="w-[24rem] h-[2px] bg-red-600"></div>
           <Outlet />
         </div>
       ) : (

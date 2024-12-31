@@ -23,5 +23,5 @@ export const signupAPI = ({ username, password }) => {
     username: username,
     password: password,
   };
-  return axios.put(apiURL.signup, data);
+  return axios.post(urlAPI.signup, data);
 };

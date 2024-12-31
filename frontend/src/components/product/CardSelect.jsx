@@ -1,7 +1,9 @@
 import React from "react";
-import useMainContext from "../../hooks/useMainContext";
-export default function CardSelect({ category }) {
-  const { categorySelected, setCategorySelected } = useMainContext();
+export default function CardSelect({
+  category,
+  categorySelected,
+  setCategorySelected,
+}) {
   const container =
     "relative flex-shrink-0 size-20 rounded-2xl outline-red-900 outline-2 outline flex justify-center items-center hover:scale-110 transition-transform duration-500 ";
   const text =

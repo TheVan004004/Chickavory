@@ -8,9 +8,10 @@ export const getCategoriesAPI = () => {
 export const getTopDiscountAPI = () => {
   return axios.get("http://localhost:8080/api/product/most_discount");
 };
-export const getProductsAPI = ({ category_id, sort_by, desc }) => {
+export const getProductsAPI = ({ category_id, sort_by, desc, name }) => {
   const data = {
     params: {
+      name: name,
       category_id: category_id !== "ALL" ? category_id || "" : "",
       sort_by: sort_by || "",
       desc: desc || "",
@@ -37,4 +38,8 @@ export const deleteProductAPI = (product_id) => {
     },
   };
   return axios.delete(urlAPI.deleteProduct, data);
+};
+
+export const addNewProductAPI = (formData) => {
+  return axios.post(urlAPI.addProduct, formData);
 };

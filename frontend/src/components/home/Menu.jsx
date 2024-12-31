@@ -2,14 +2,12 @@ import React from "react";
 import Product from "../product/Product";
 import useMainContext from "../../hooks/useMainContext";
 
-export default function Menu() {
-  const {
-    listProducts,
-    setListProducts,
-    categorySelected,
-    setSort_by,
-    setDesc,
-  } = useMainContext();
+export default function Menu({
+  listProducts,
+  categorySelected,
+  setSort_by,
+  setDesc,
+}) {
   const handleSwitchSort = (sort_by) => {
     if (sort_by === "price_asc") {
       setDesc("");

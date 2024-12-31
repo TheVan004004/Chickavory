@@ -9,6 +9,8 @@ import Admin from "./pages/Admin";
 import ManageProducts from "./components/admin/ManageProducts";
 import ManageOrders from "./components/admin/ManageOrders";
 import Delivery from "./pages/Delivery";
+import Overview from "./components/admin/Overview";
+import Order from "./pages/Order";
 
 export default function RoutesApp() {
   return useRoutes([
@@ -29,6 +31,10 @@ export default function RoutesApp() {
           element: <User />,
         },
         {
+          path: "order",
+          element: <Order />,
+        },
+        {
           path: "delivery",
           element: <Delivery />,
         },
@@ -42,6 +48,10 @@ export default function RoutesApp() {
           children: [
             {
               index: true,
+              element: <Overview />,
+            },
+            {
+              path: "products",
               element: <ManageProducts />,
             },
             {

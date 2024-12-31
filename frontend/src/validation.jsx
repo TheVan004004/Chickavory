@@ -27,8 +27,10 @@ export const validate = (value, validation, check) => {
 export const validateForm = (form) => {
   let error = new Set();
   form.forEach((feild) => {
-    if (isRequired(feild.value)) {
-      error.add(isRequired(feild.value));
+    if (typeof feild.value === "string") {
+      if (isRequired(feild.value)) {
+        error.add(isRequired(feild.value));
+      }
     }
     feild.validates.forEach((validate) => {
       if (validate.function(feild.value, validate.check)) {
@@ -41,8 +43,16 @@ export const validateForm = (form) => {
 export const isRequired = (value) => {
   if (value.trim() === "") return "Please fill all informations. ";
 };
-export const isConfirmed = (value, valueConfirm) => {
+export const isConfirmedPassword = (value, valueConfirm) => {
   if (value !== valueConfirm) return "Confirm password is incorrect. ";
+};
+
+export const isImagePNG = (file, check) => {
+  if (file.type !== "image/png") return "Image is not PNG format. ";
+};
+
+export const isPrice = (value, check) => {
+  if (value < check) return "Inappropriate pricing. ";
 };
 
 export const minChar = (value, min) => {

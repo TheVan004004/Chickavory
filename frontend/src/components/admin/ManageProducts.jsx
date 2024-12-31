@@ -5,12 +5,14 @@ import {
   getProductsAPI,
   updateProductAPI,
 } from "../../services/product.api";
+import ModalAddProduct from "./ModalAddProduct";
 
 export default function ManageProducts() {
   const [listProducts, setListProducts] = useState([]);
   const [listProductsCache, setListProductsCache] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isOpenModalProduct, setIsOpenModalProduct] = useState(false);
   useEffect(() => {
     getProducts();
   }, []);
@@ -20,6 +22,7 @@ export default function ManageProducts() {
       category_id: "",
       sort_by: "",
       desc: "",
+      name: "",
     });
     setListProducts(res.data);
     setListProductsCache(res.data);
@@ -81,7 +84,7 @@ export default function ManageProducts() {
 
         <button
           className="px-4 py-1 bg-red-900 border-red-900 border-2 rounded-xl text-white font-medium"
-          //   onClick={() => setIsEdit(true)}
+          onClick={() => setIsOpenModalProduct(true)}
         >
           Add product
         </button>
@@ -89,31 +92,31 @@ export default function ManageProducts() {
       <div className="relative overflow-x-auto sm:rounded-lg ">
         <table
           className={
-            "w-full text-sm text-left rtl:text-right text-white" +
+            "w-full text-sm text-left rtl:text-right text-white table-fixed overflow-scroll" +
             (isEdit ? "" : " cursor-not-allowed")
           }
         >
           <thead className="text-xs text-white uppercase bg-red-900 ">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 w-80 truncate">
                 Product name
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 w-36 truncate">
                 Category
               </th>
-              <th scope="col" className="px-6 py-3">
-                Image
-              </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 w-32 text-center truncate">
                 Buyturn
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 w-32 truncate">
                 Price
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 w-36 truncate">
                 Discount (%)
               </th>
-              <th scope="col" className="px-6 py-3"></th>
+              <th scope="col" className="px-6 py-3 w-36 text-center truncate">
+                Sale price
+              </th>
+              <th scope="col" className="px-6 py-3 w-20"></th>
             </tr>
           </thead>
           <tbody className="bg-red-400">
@@ -155,6 +158,10 @@ export default function ManageProducts() {
           <p className="text-2xl text-white">Waiting for Update...</p>
         </div>
       </div>
+      <ModalAddProduct
+        isOpenModalProduct={isOpenModalProduct}
+        setIsOpenModalProduct={setIsOpenModalProduct}
+      />
     </>
   );
 }

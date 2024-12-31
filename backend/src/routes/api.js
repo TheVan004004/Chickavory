@@ -1,6 +1,7 @@
 import express from "express";
 import { login, signup, update } from "../controller/user.controller.js";
 import {
+  addProduct,
   deleteProduct,
   getAllCategories,
   getProducts,
@@ -14,6 +15,7 @@ import {
   updateProductInCart,
 } from "../controller/cart.controller.js";
 import { getOrder, order } from "../controller/order.controller.js";
+import { uploadProductImage } from "../middleware/upload.js";
 
 const router = express.Router();
 // init route
@@ -27,6 +29,7 @@ const initAPIRoute = (app) => {
   app.get("/api/product", getProducts);
   app.get("/api/product/category", getAllCategories);
   app.get("/api/product/most_discount", getTopDiscountProducts);
+  app.post("/api/product/add", uploadProductImage, addProduct);
   app.put("/api/product/update", updateProduct);
   app.delete("/api/product/delete", deleteProduct);
 

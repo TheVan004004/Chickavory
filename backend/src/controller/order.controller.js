@@ -67,7 +67,7 @@ async function getOrder(req, res) {
     join products pds on pds.id = od.product_id
     left join sales on pds.sale_id = sales.id
     left join categories ct on ct.id = pds.category_id
-    where user_id = $1
+    where o.user_id = $1
     `;
     let value = [user_id];
     if (status) {
