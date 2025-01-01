@@ -45,7 +45,7 @@ export default function Menu({
           return <Product product={product} key={product.id} />;
         })}
       </div>
-      <div className="flex justify-center items-center  ">
+      {/* <div className="flex justify-center items-center  ">
         <button
           className="text-red-900 font-medium w-56 py-3 
         rounded-xl border-red-900 border-2 border-dashed hover:w-72 
@@ -54,7 +54,7 @@ export default function Menu({
         >
           View More
         </button>
-      </div>
+      </div> */}
     </>
   );
 }

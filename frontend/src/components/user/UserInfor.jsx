@@ -2,23 +2,36 @@ import React, { useEffect, useState } from "react";
 import useMainContext from "../../hooks/useMainContext";
 import { updateAPI } from "../../services/user.api";
 import { getProductsInCartAPI } from "../../services/cart.api";
+import { isPhoneNumber } from "../../validation";
+import { toast } from "react-toastify";
+import { HiOutlinePencilAlt } from "react-icons/hi";
+import ModalUpdatePassword from "./ModalUpdatePassword";
 export default function UserInfor() {
   const [isEdit, setIsEdit] = useState(false);
   const { user } = useMainContext();
   const [fullname, setFullname] = useState(user.fullname);
   const [address, setAddress] = useState(user.address);
   const [phonenumber, setPhonenumber] = useState(user.phonenumber);
+  const [isUpdatePassword, setIsUpdatePassword] = useState(false);
 
   const updateUser = async () => {
-    await updateAPI({
-      user_id: user.id,
-      address: address,
-      fullname: fullname,
-      phonenumber: phonenumber,
-    });
-    setIsEdit(false);
+    const error = isPhoneNumber(phonenumber);
+    if (error) {
+      toast.error(error);
+      return;
+    }
+    try {
+      await updateAPI({
+        user_id: user.id,
+        address: address,
+        fullname: fullname,
+        phonenumber: phonenumber,
+      });
+      setIsEdit(false);
+    } catch (e) {
+      toast.error(e.response);
+    }
   };
-
   return (
     <div className="flex flex-col gap-4 flex-grow p-4 shadow-md shadow-red-500/50 rounded-xl hover:shadow-lg hover:shadow-red-500/50 transition-shadow duration-500">
       <div className="font-semibold text-3xl">@{user.username}</div>
@@ -74,11 +87,12 @@ export default function UserInfor() {
             ></input>
           </td>
         </tr>
+
         <tr>
           <td>
             <div className=" font-medium ">Password: </div>
           </td>
-          <td className="py-2">
+          <td className="py-2 flex gap-4 items-center">
             <input
               className={
                 "rounded-xl pl-4 py-2 outline-none w-full transition-colors duration-500" +
@@ -91,6 +105,10 @@ export default function UserInfor() {
               disabled
               type="password"
             ></input>
+            <HiOutlinePencilAlt
+              className="size-8 cursor-pointer"
+              onClick={() => setIsUpdatePassword(true)}
+            />
           </td>
         </tr>
       </table>
@@ -113,6 +131,10 @@ export default function UserInfor() {
           Save
         </button>
       </div>
+      <ModalUpdatePassword
+        isUpdatePassword={isUpdatePassword}
+        setIsUpdatePassword={setIsUpdatePassword}
+      />
     </div>
   );
 }

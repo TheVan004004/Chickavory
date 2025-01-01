@@ -1,10 +1,16 @@
 import express from "express";
-import { login, signup, update } from "../controller/user.controller.js";
+import {
+  login,
+  signup,
+  update,
+  updatePassword,
+} from "../controller/user.controller.js";
 import {
   addProduct,
   deleteProduct,
   getAllCategories,
   getProducts,
+  getPurchasedProduct,
   getTopDiscountProducts,
   updateProduct,
 } from "../controller/product.controller.js";
@@ -14,7 +20,13 @@ import {
   getProductsInCart,
   updateProductInCart,
 } from "../controller/cart.controller.js";
-import { getOrder, order } from "../controller/order.controller.js";
+import {
+  getChartOrder,
+  getOrder,
+  order,
+  updateOrderForAdmin,
+  updateOrderForUser,
+} from "../controller/order.controller.js";
 import { uploadProductImage } from "../middleware/upload.js";
 
 const router = express.Router();
@@ -24,6 +36,7 @@ const initAPIRoute = (app) => {
   app.post("/api/user/signup", signup);
   app.post("/api/user/login", login);
   app.put("/api/user/update", update);
+  app.put("/api/user/update/password", updatePassword);
 
   //product
   app.get("/api/product", getProducts);
@@ -38,10 +51,16 @@ const initAPIRoute = (app) => {
   app.get("/api/user/cart/product", getProductsInCart);
   app.delete("/api/user/cart/product/delete", deleteProductInCart);
   app.put("/api/user/cart/product/update", updateProductInCart);
+  app.get("/api/user/product/purcharsed", getPurchasedProduct);
 
   //order
   app.post("/api/user/order", order);
   app.get("/api/user/order/get", getOrder);
+  app.put("/api/user/order/update_status", updateOrderForUser);
+  app.put("/api/admin/order/update_status", updateOrderForAdmin);
+
+  // chart
+  app.get("/api/admin/chart/order/status", getChartOrder);
 
   app.use("/api/v1", router);
 };

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import useMainContext from "../../hooks/useMainContext";
-import { HiOutlineXCircle } from "react-icons/hi";
 import { HiOutlineKey } from "react-icons/hi";
 import { HiOutlineCheckCircle } from "react-icons/hi";
 import {

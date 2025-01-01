@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import CardSelect from "../product/CardSelect";
-import { getCategoriesAPI } from "../../services/product.api";
 import useMainContext from "../../hooks/useMainContext";
 import OptionSort from "./components/OptionSort";
 import OptionSortForSmallView from "./components/OptionSortForSmallView";

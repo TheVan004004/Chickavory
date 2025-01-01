@@ -1,47 +1,74 @@
 import React, { useEffect, useState } from "react";
 import { getOrdersAPI } from "../../services/order.api";
-import useMainContext from "../../hooks/useMainContext";
-import CardOrder from "../order/CardOrder";
+import CardOrder from "./CardOrder";
 
 export default function ManageOrders() {
   const [listOrders, setListOrders] = useState();
-  const { user } = useMainContext();
+  const [state, setState] = useState("");
   useEffect(() => {
     getOrders();
-  }, []);
+  }, [state]);
 
   const getOrders = async () => {
     const res = await getOrdersAPI({
-      user_id: user.id,
-      status: "",
+      user_id: "",
+      status: state,
     });
     setListOrders(res.data);
   };
   return (
     <>
+      <div className="py-2 px-4 w-48 flex justify-between bg-red-900 rounded-xl text-white">
+        <div>Status:</div>
+        <select
+          className="bg-transparent outline-none"
+          value={state}
+          onChange={(e) => setState(e.target.value)}
+        >
+          <option value="">All</option>
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
       <div className="flex gap-4 justify-between">
         <div className="relative overflow-x-auto sm:rounded-lg ">
-          <table className="w-full text-sm text-left rtl:text-right text-white">
+          <table className="w-full text-sm text-left rtl:text-right text-white table-fixed">
             <thead className="text-xs text-white uppercase bg-red-900 ">
               <tr>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 w-28">
                   Order Id
                 </th>
                 <th scope="col" className="px-6 py-3">
                   User Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Date
+                  Phone number
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Address
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Created at
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Payment
+                </th>
+                <th scope="col" className="px-6 py-3 text-center">
                   Status
                 </th>
-                <th scope="col" className="px-6 py-3"></th>
+                <th scope="col" className="px-6 py-3 w-20"></th>
               </tr>
             </thead>
             <tbody className="bg-red-400">
               {listOrders?.map((order, index) => {
-                return <></>;
+                return (
+                  <CardOrder
+                    order={order}
+                    getOrders={getOrders}
+                    key={order.id}
+                  />
+                );
               })}
             </tbody>
           </table>

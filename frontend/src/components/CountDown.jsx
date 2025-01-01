@@ -45,7 +45,7 @@ const CountDownTime = () => {
   }, []);
 
   return (
-    <div style={{ fontSize: "2rem", fontWeight: "bold", textAlign: "center" }}>
+    <div className="text-4xl font-bold text-center">
       <span>{hourTime}</span> : <span>{minuteTime}</span> :{" "}
       <span>{secondTime}</span>
     </div>

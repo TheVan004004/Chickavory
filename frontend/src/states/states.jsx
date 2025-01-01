@@ -20,7 +20,7 @@ export const ContextWrapper = (props) => {
   }, []);
   const getCategories = async () => {
     const res = await getCategoriesAPI();
-    setCategories([{ id: "ALL", name: "ALL", image: null }, ...res.data]);
+    setCategories([{ id: "", name: "All", image: null }, ...res.data]);
   };
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));

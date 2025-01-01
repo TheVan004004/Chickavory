@@ -10,12 +10,10 @@ export async function uploadProductImage(req, res, next) {
     uploadDir: path.join(__dirname, "../public/images/products"),
     keepExtensions: true, // Để giữ lại phần mở rộng file
   });
-
   form.parse(req, (err, fields, files) => {
     if (err) {
       return res.status(400).json({ message: "Error parsing form data" });
     }
-
     // Lưu trữ thông tin `fields` và `files` trong request để dùng sau
     req.body = fields;
     req.files = files;

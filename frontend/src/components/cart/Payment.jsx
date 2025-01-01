@@ -37,8 +37,11 @@ export default function Payment({ listOrder, setListOrder }) {
               <th scope="col" className="px-3 py-2">
                 Price
               </th>
-              <th scope="col" className="px-3 py-2">
+              <th scope="col" className="px-3 py-2 text-center">
                 Count
+              </th>
+              <th scope="col" className="px-3 py-2">
+                Total
               </th>
               <th scope="col" className="px-3 py-2"></th>
             </tr>
@@ -58,11 +61,20 @@ export default function Payment({ listOrder, setListOrder }) {
                     {(
                       (product.price * (100 - product.discount)) /
                       100
-                    ).toLocaleString("vi-VN")}
-                    đ
+                    ).toLocaleString("vi-VN")}{" "}
+                    VND
                   </td>
                   <td className="px-3 py-4 text-center text-red-900">
                     {product.count}
+                  </td>
+                  <td className="px-3 py-4 text-red-900">
+                    {(
+                      (product.price *
+                        (100 - product.discount) *
+                        product.count) /
+                      100
+                    ).toLocaleString("vi-VN")}{" "}
+                    VND
                   </td>
                   <td className="px-3 py-4 text-center text-red-900">
                     <HiOutlineTrash
@@ -80,7 +92,7 @@ export default function Payment({ listOrder, setListOrder }) {
           </tbody>
         </table>
         <div className="p-2 bg-red-100 font-bold text-red-900 text-lg text-center">
-          {sumPrice > 0 && ` Sum: ${sumPrice.toLocaleString("vi-VN")}đ`}
+          {sumPrice > 0 && ` Total Order: ${sumPrice.toLocaleString("vi-VN")}đ`}
         </div>
         <div className="flex justify-end ">
           <button

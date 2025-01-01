@@ -43,3 +43,11 @@ export const deleteProductAPI = (product_id) => {
 export const addNewProductAPI = (formData) => {
   return axios.post(urlAPI.addProduct, formData);
 };
+
+export const getPurchasedProductAPI = (user_id) => {
+  return axios.get(urlAPI.purchasedProduct, {
+    params: {
+      user_id: user_id,
+    },
+  });
+};

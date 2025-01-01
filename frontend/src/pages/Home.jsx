@@ -10,18 +10,14 @@ export default function Home() {
   const [sort_by, setSort_by] = useState("");
   const [desc, setDesc] = useState("");
   const [listProducts, setListProducts] = useState([]);
-  const [categorySelected, setCategorySelected] = useState({
-    id: "ALL",
-    name: "ALL",
-    image: null,
-  });
+  const [categorySelected, setCategorySelected] = useState("");
   useEffect(() => {
     getProducts();
   }, [categorySelected, sort_by, desc]);
   const getProducts = async () => {
     const res = await getProductsAPI({
       name: nameSearch,
-      category_id: categorySelected.id,
+      category_id: categorySelected,
       sort_by: sort_by,
       desc: desc,
     });

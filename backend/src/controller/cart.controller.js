@@ -11,14 +11,12 @@ async function addToCart(req, res) {
     if (!user_id && !product_id && !count) {
       throw { messages: "Error" };
     }
-    const product = await db.query(
-      "select * from products where product_id = $1",
-      [product_id]
-    );
-    if (
-      product.rows[0].active === false ||
-      product.rows[0].active === "false"
-    ) {
+
+    const product = await db.query("select * from products where id = $1", [
+      product_id,
+    ]);
+
+    if (product?.rows[0]?.active === false) {
       throw { messages: "This product is no longer for sale" };
     }
     const { rows } = await db.query(
@@ -56,7 +54,7 @@ async function getProductsInCart(req, res) {
         join carts on carts.product_id = pds.id
         join users on users.id = carts.user_id
         where users.id = $1
-        order by carts.created_at
+        order by carts.created_at desc
         `,
       [user_id]
     );

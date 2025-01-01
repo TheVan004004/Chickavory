@@ -11,15 +11,15 @@ export default function CardSelect({
   return (
     <div
       className={
-        categorySelected.id === category.id
+        categorySelected === category.id
           ? container + " outline-4 outline-red-400"
           : container
       }
       onClick={() => {
-        setCategorySelected(category);
+        setCategorySelected(category.id);
       }}
     >
-      {categorySelected.id === category.id && (
+      {categorySelected === category.id && (
         <div className="absolute top-0 left-0 w-full h-full bg-red-300 rounded-2xl opacity-20"></div>
       )}
       {category.image ? (

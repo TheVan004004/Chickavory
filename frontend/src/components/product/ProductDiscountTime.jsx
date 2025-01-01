@@ -1,11 +1,32 @@
 import React from "react";
 import { HiOutlineTag, HiOutlinePlusSm } from "react-icons/hi";
 import CountDownTime from "../CountDown";
+import useMainContext from "../../hooks/useMainContext";
+import { toast } from "react-toastify";
+import { addToCartAPI } from "../../services/cart.api";
 export default function ProductDiscountTime({ product }) {
-  const { name, price, image, discount, time_start, time_end } = product;
+  const { user } = useMainContext();
+  const { name, price, image, discount, time_start, time_end, id } = product;
+  const handleAddToCart = async () => {
+    try {
+      if (!user && !user.id) {
+        toast.error("Please login before order something");
+        return;
+      }
+      const res = await addToCartAPI({
+        user_id: user.id,
+        product_id: id,
+        count: 1,
+      });
+      // console.log(res.data);
+      toast.success(res.data.messages);
+    } catch (e) {
+      toast.error(e.response);
+    }
+  };
   return (
     <div className="relative rounded-2xl  h-auto shadow-md shadow-red-400/50 hover:shadow-lg hover:shadow-red-400/50 transition-all duration-1000">
-      <div className="p-4">
+      <div className="p-4 text-white bg-red-900 rounded-t-2xl">
         <CountDownTime />
       </div>
 
@@ -28,7 +49,10 @@ export default function ProductDiscountTime({ product }) {
               </del>
             </div>
           </div>
-          <div className="bg-yellow-400 rounded-xl size-14 max-sm:size-14 flex justify-center items-center">
+          <div
+            className="bg-yellow-400 rounded-xl size-14 max-sm:size-14 flex justify-center items-center"
+            onClick={handleAddToCart}
+          >
             <HiOutlinePlusSm className="size-8 max-sm:size-12 text-red-900 hover:scale-150 transition-all duration-500" />
           </div>
         </div>

@@ -8,19 +8,27 @@ export default function Product({ product }) {
   const { name, price, image, discount, id } = product;
   const { user } = useMainContext();
   const handleAddToCart = async () => {
-    const res = await addToCartAPI({
-      user_id: user.id,
-      product_id: id,
-      count: 1,
-    });
-    // console.log(res.data);
-    toast.success(res.data.messages);
+    try {
+      if (!user && !user.id) {
+        toast.error("Please login before order something");
+        return;
+      }
+      const res = await addToCartAPI({
+        user_id: user.id,
+        product_id: id,
+        count: 1,
+      });
+      // console.log(res.data);
+      toast.success(res.data.messages);
+    } catch (e) {
+      toast.error(e.response);
+    }
   };
   return (
     <div className="rounded-xl p-4 h-auto shadow-md shadow-red-400/50 hover:shadow-lg hover:shadow-red-400/50 transition-all duration-1000">
       <div className="rounded-xl border-[1px] border-red-500 bg-red-100">
         <img
-          className="w-full h-auto rounded-xl object-contain"
+          className="w-full max-h-[200px] rounded-xl object-contain"
           src={image}
           alt=""
         />

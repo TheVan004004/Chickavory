@@ -47,6 +47,18 @@ export const isConfirmedPassword = (value, valueConfirm) => {
   if (value !== valueConfirm) return "Confirm password is incorrect. ";
 };
 
+export const isPhoneNumber = (value) => {
+  if (value.length !== 10 && value.length !== 11) {
+    return "Invalid phone number format";
+  }
+  if (!/^\d+$/.test(value)) {
+    return "Invalid phone number format";
+  }
+  if (value[0] !== "0") {
+    return "Invalid phone number format";
+  }
+};
+
 export const isImagePNG = (file, check) => {
   if (file.type !== "image/png") return "Image is not PNG format. ";
 };

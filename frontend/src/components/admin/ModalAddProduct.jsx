@@ -49,7 +49,7 @@ export default function ModalAddProduct({
       return;
     }
     const formData = new FormData();
-    formData.set("name", name); // Sử dụng set thay vì append
+    formData.set("name", name);
     formData.set("price", price);
     formData.set("sale_id", discount / 10);
     formData.set("category_id", category);
@@ -62,10 +62,10 @@ export default function ModalAddProduct({
         toast.error("Something went wrong. Please try again.");
         return;
       }
-
-      console.log("Product added successfully:", res);
+      setIsOpenModalProduct(false);
+      toast.success("Product added successfully:");
     } catch (error) {
-      console.error("Error occurred:", error);
+      toast.error("Error occurred:", error);
     }
   };
   return (

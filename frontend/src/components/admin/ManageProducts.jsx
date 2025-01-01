@@ -6,27 +6,34 @@ import {
   updateProductAPI,
 } from "../../services/product.api";
 import ModalAddProduct from "./ModalAddProduct";
+import useMainContext from "../../hooks/useMainContext";
 
 export default function ManageProducts() {
+  const { categories } = useMainContext();
   const [listProducts, setListProducts] = useState([]);
   const [listProductsCache, setListProductsCache] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isOpenModalProduct, setIsOpenModalProduct] = useState(false);
+  const [nameSearch, setNameSearch] = useState("");
+  const [sort_by, setSort_by] = useState("");
+  const [desc, setDesc] = useState("");
+  const [categorySelected, setCategorySelected] = useState("");
   useEffect(() => {
     getProducts();
-  }, []);
-
+  }, [categorySelected, sort_by, desc]);
+  console.log(categorySelected);
   const getProducts = async () => {
     const res = await getProductsAPI({
-      category_id: "",
-      sort_by: "",
-      desc: "",
-      name: "",
+      name: nameSearch,
+      category_id: categorySelected,
+      sort_by: sort_by,
+      desc: desc,
     });
     setListProducts(res.data);
     setListProductsCache(res.data);
   };
+
   const handleSave = async () => {
     setIsSaving(true);
     let isChange = false;
@@ -60,8 +67,67 @@ export default function ManageProducts() {
     setIsSaving(false);
     setIsEdit(false);
   };
+  const handlRevert = () => {
+    setIsEdit(false);
+    setListProductsCache(listProducts);
+  };
+  const handleSwitchSort = (sort_by) => {
+    if (sort_by === "price_asc") {
+      setDesc("");
+      setSort_by("price");
+      return;
+    }
+    setDesc("desc");
+    setSort_by(sort_by);
+  };
   return (
     <>
+      <div className="*:bg-red-900 *:text-white *:rounded-2xl flex gap-8">
+        <input
+          className="p-4 py-2 outline-none w-96"
+          placeholder="Search products"
+          value={nameSearch}
+          onChange={(e) => setNameSearch(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              getProducts();
+            }
+          }}
+        />
+        <div className="flex gap-2 items-center px-2">
+          <div>Category: </div>
+          <div className="">
+            <select
+              className="px-2 bg-transparent text-white outline-none"
+              value={categorySelected}
+              onChange={(e) => setCategorySelected(e.target.value)}
+            >
+              {categories.map((category) => {
+                return (
+                  <option value={category.id} key={category.id}>
+                    {category.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
+
+        <div className="flex gap-2 items-center px-2">
+          <div>Sort by: </div>
+          <div className="">
+            <select
+              className="px-2 bg-transparent text-white outline-none"
+              onChange={(e) => handleSwitchSort(e.target.value)}
+            >
+              <option value="buyturn">Buyturn</option>
+              <option value="price">Price high to low</option>
+              <option value="price_asc">Price low to high</option>
+              <option value="discount">Discount</option>
+            </select>
+          </div>
+        </div>
+      </div>
       <div className="flex gap-4 justify-between">
         <div className="flex gap-4">
           <button
@@ -69,6 +135,12 @@ export default function ManageProducts() {
             onClick={() => setIsEdit(true)}
           >
             Edit
+          </button>
+          <button
+            className="px-4 py-1 border-red-900 border-2 border-solid rounded-xl text-red-900 font-medium"
+            onClick={handlRevert}
+          >
+            Revert
           </button>
           <button
             className={

@@ -119,7 +119,6 @@ export async function deleteProduct(req, res) {
 export async function addProduct(req, res) {
   try {
     const { name, price, sale_id, category_id } = req.body;
-    console.log(category_id);
     const { rows } = await db.query(
       `select count(name) from products where category_id = $1 `,
       [category_id[0]]
@@ -164,6 +163,38 @@ export async function getAllCategories(req, res) {
   } catch (e) {
     res.status(400).json({
       messages: e.messages,
+    });
+  }
+}
+
+export async function getPurchasedProduct(req, res) {
+  try {
+    const { user_id } = req.query;
+    let queryContent = `
+    select pds.id, pds.image, pds.name, pds.price,
+      ct.name as category_name, sales.discount, sum(od.count) as total_count
+      from orders o
+      join order_detail od on od.order_id = o.id
+      join products pds on pds.id = od.product_id
+      left join sales on pds.sale_id = sales.id
+      left join categories ct on ct.id = pds.category_id
+      where o.user_id = $1
+      group by pds.id, pds.image, pds.name, pds.price, ct.name, sales.discount
+      order by sum(od.count) desc;
+    `;
+    let value = [user_id];
+    const { rows } = await db.query(queryContent, value);
+    const products = rows?.map((row) => {
+      return {
+        ...row,
+        image: `http://${hostname}:${port}/images/products/${row.image}`,
+      };
+    });
+    res.status(200).json(products);
+  } catch (e) {
+    console.error(e);
+    res.status(400).json({
+      messages: e.message,
     });
   }
 }

@@ -8,7 +8,7 @@ export default function Order() {
   return (
     <>
       {user ? (
-        <div className="p-4 pt-20 h-[calc(100vh-5rem)] max-md:h-auto ">
+        <div className=" min-h-[calc(100vh-5rem)] max-md:min-h-[calc(100vh-8rem)] p-4 pt-20 max-md:h-auto ">
           <ListOrder user={user} />
         </div>
       ) : (
