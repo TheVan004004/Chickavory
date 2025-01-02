@@ -6,6 +6,7 @@ export const urlAPI = {
   signup: `${url}/user/signup`,
   updateUser: `${url}/user/update`,
   updatePassword: `${url}/user/update/password`,
+  getUsers: `${url}/admin/users`,
 
   //order
   order: `${url}/user/order`,
@@ -29,4 +30,6 @@ export const urlAPI = {
 
   //chart
   getChartStatusOrder: `${url}/admin/chart/order/status`,
+  getYearlyRevenue: `${url}/admin/chart/yearly_revenue`,
+  getYearlyBuyturn: `${url}/admin/chart/yearly_buyturn`,
 };

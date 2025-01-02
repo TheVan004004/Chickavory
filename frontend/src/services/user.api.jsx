@@ -34,3 +34,11 @@ export const signupAPI = ({ username, password }) => {
   };
   return axios.post(urlAPI.signup, data);
 };
+
+export const getUsersAPI = (sort_by) => {
+  return axios.get(urlAPI.getUsers, {
+    params: {
+      sort: sort_by,
+    },
+  });
+};

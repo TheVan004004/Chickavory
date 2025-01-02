@@ -63,7 +63,7 @@ export default function CardOrder({ getOrders, order }) {
         <td className="text-center">{getStatus(order.status)}</td>
         <td className="text-center">
           <HiOutlineEye
-            className="size-8 hover:scale-125 transition-all duration-300"
+            className="size-6 hover:scale-125 transition-all duration-300"
             onClick={() => setIsOpenModal(true)}
           />
         </td>

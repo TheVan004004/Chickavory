@@ -33,6 +33,14 @@ export const updateStatusForAdminAPI = async (order_id) => {
   return axios.put(urlAPI.updateStatusForAdmin, data);
 };
 
-export const getChartOrderStatusAPI = () => {
-  return axios.get(urlAPI.getChartStatusOrder);
+export const getChartOrderStatusAPI = (option) => {
+  return axios.get(urlAPI.getChartStatusOrder, { params: { option: option } });
+};
+
+export const getYearlyRevenueAPI = () => {
+  return axios.get(urlAPI.getYearlyRevenue);
+};
+
+export const getYearlyOrderAPI = () => {
+  return axios.get(urlAPI.getYearlyBuyturn);
 };

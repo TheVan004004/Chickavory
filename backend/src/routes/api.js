@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  getUsers,
   login,
   signup,
   update,
@@ -23,6 +24,8 @@ import {
 import {
   getChartOrder,
   getOrder,
+  getYearlyOrderCount,
+  getYearlyRevenue,
   order,
   updateOrderForAdmin,
   updateOrderForUser,
@@ -37,6 +40,7 @@ const initAPIRoute = (app) => {
   app.post("/api/user/login", login);
   app.put("/api/user/update", update);
   app.put("/api/user/update/password", updatePassword);
+  app.get("/api/admin/users", getUsers);
 
   //product
   app.get("/api/product", getProducts);
@@ -61,6 +65,8 @@ const initAPIRoute = (app) => {
 
   // chart
   app.get("/api/admin/chart/order/status", getChartOrder);
+  app.get("/api/admin/chart/yearly_revenue", getYearlyRevenue);
+  app.get("/api/admin/chart/yearly_buyturn", getYearlyOrderCount);
 
   app.use("/api/v1", router);
 };

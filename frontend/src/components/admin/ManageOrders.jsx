@@ -5,32 +5,49 @@ import CardOrder from "./CardOrder";
 export default function ManageOrders() {
   const [listOrders, setListOrders] = useState();
   const [state, setState] = useState("");
+  const [userId, setUserId] = useState("");
   useEffect(() => {
     getOrders();
   }, [state]);
 
   const getOrders = async () => {
     const res = await getOrdersAPI({
-      user_id: "",
+      user_id: userId,
       status: state,
     });
     setListOrders(res.data);
   };
   return (
     <>
-      <div className="py-2 px-4 w-48 flex justify-between bg-red-900 rounded-xl text-white">
-        <div>Status:</div>
-        <select
-          className="bg-transparent outline-none"
-          value={state}
-          onChange={(e) => setState(e.target.value)}
-        >
-          <option value="">All</option>
-          <option value="pending">Pending</option>
-          <option value="processing">Processing</option>
-          <option value="completed">Completed</option>
-        </select>
+      <div className="flex gap-4 items-center">
+        <div className="py-2 px-4 w-48 flex justify-between bg-red-900 rounded-xl text-white">
+          <div>Status:</div>
+          <select
+            className="bg-transparent outline-none"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+          >
+            <option value="">All</option>
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+        <div className="py-2 px-4 w-32 flex gap-2 justify-between bg-red-900 rounded-xl text-white">
+          <div className="text-nowrap">User Id:</div>
+          <input
+            className="bg-transparent outline-none "
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                getOrders();
+              }
+            }}
+          />
+        </div>
       </div>
+
       <div className="flex gap-4 justify-between">
         <div className="relative overflow-x-auto sm:rounded-lg ">
           <table className="w-full text-sm text-left rtl:text-right text-white table-fixed">

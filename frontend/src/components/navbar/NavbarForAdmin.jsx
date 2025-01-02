@@ -3,6 +3,7 @@ import {
   HiOutlineChartSquareBar,
   HiOutlineClipboardList,
   HiOutlineCollection,
+  HiOutlineUserGroup,
 } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
@@ -29,6 +30,13 @@ export default function NavbarForAdmin() {
       >
         <HiOutlineClipboardList className="size-6" />
         <p className="text-lg">Orders</p>
+      </Link>
+      <Link
+        to="users"
+        className="flex justify-center items-center gap-2 cursor-pointer"
+      >
+        <HiOutlineUserGroup className="size-6" />
+        <p className="text-lg">Users</p>
       </Link>
     </div>
   );

@@ -9,8 +9,9 @@ import Admin from "./pages/Admin";
 import ManageProducts from "./components/admin/ManageProducts";
 import ManageOrders from "./components/admin/ManageOrders";
 import Delivery from "./pages/Delivery";
-import Overview from "./components/admin/Overview";
+import Overview from "./components/admin/Overview/Overview";
 import Order from "./pages/Order";
+import ManageUsers from "./components/admin/ManageUsers";
 
 export default function RoutesApp() {
   return useRoutes([
@@ -57,6 +58,10 @@ export default function RoutesApp() {
             {
               path: "orders",
               element: <ManageOrders />,
+            },
+            {
+              path: "users",
+              element: <ManageUsers />,
             },
           ],
         },

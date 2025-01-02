@@ -22,6 +22,7 @@ export function timeAgo(dateString) {
   const diffInHours = Math.floor(diffInMinutes / 60);
   const diffInDays = Math.floor(diffInHours / 24);
 
+  // Nếu cùng ngày theo toDateString
   if (now.toDateString() === inputDate.toDateString()) {
     if (diffInHours > 0) {
       return `${diffInHours} hours ago`;
@@ -30,6 +31,11 @@ export function timeAgo(dateString) {
     } else {
       return `${diffInSeconds} seconds ago`;
     }
+  }
+
+  // Nếu khác ngày nhưng vẫn dưới 24 giờ
+  if (diffInDays === 0) {
+    return `${diffInHours} hours ago`;
   }
 
   const dayOfWeekNow = now.getDay();
@@ -41,4 +47,28 @@ export function timeAgo(dateString) {
   }
 
   return formatDate(dateString);
+}
+
+export function getMonthName(monthNumber) {
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  // Kiểm tra nếu số tháng hợp lệ
+  if (monthNumber < 1 || monthNumber > 12) {
+    return "Invalid month number";
+  }
+
+  return monthNames[monthNumber - 1];
 }

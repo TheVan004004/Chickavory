@@ -113,3 +113,38 @@ export const signup = async (req, res) => {
     });
   }
 };
+
+export const getUsers = async (req, res) => {
+  try {
+    const { sort } = req.query;
+    const query = `
+      SELECT 
+        users.id AS user_id,
+        users.username,
+        users.fullname,
+        users.address,
+        users.phonenumber,
+        COUNT(orders.id) AS buyturn
+      FROM 
+        users
+      LEFT JOIN 
+        orders ON users.id = orders.user_id
+      GROUP BY 
+        users.id, users.username,
+        users.fullname,
+        users.address,
+        users.phonenumber
+      ORDER BY 
+        buyturn ${sort};
+    `;
+
+    const { rows } = await db.query(query);
+
+    res.status(200).json(rows);
+  } catch (error) {
+    res.status(400).json({
+      messages: "Error retrieving user purchase info",
+      error: error.message,
+    });
+  }
+};
